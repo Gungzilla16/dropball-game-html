@@ -1,21 +1,38 @@
-let character = document.getElementById('character');
+const character = document.getElementById('character');
 let interval;
+let both = 0;
 
 function moveLeft() {
-    let left = parseInt(window.getComputedStyle(character).getPropertyValue('left'));
-    character.style.left = left + 2 + 'px';
+    let left = 
+    parseInt(window.getComputedStyle(character).getPropertyValue('left'));
+    if(left>0) {
+        character.style.left = left - 2 + 'px';
+    }
 }
 
 function moveRight() {
-    let left = parseInt(window.getComputedStyle(character).getPropertyValue('left'));
-    character.style.left = left - 2 + 'px';
+    let right = parseInt(window.getComputedStyle(character).getPropertyValue('left'));
+    if (right<380) {
+        character.style.left = right + 2 + 'px';
+    }
 }
 
-document.addEventListener('keydown', event => {
-    if (event.key === 'arrowLeft') {
+window.addEventListener("keydown", event => {
+    if (both==0){
+        both++;
+    }
+    if (event.key === "ArrowLeft") {
         interval = setInterval(moveLeft, 1);
     }
-    if (event.key === 'arrowRight'){
+    if (event.key === "ArrowRight"){
         interval = setInterval(moveRight, 1);
     }
 });
+
+
+window.addEventListener('keyup', event => {
+    // console.log('oke');
+    clearInterval(interval);
+    both = 0;
+});
+
